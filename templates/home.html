@@ -1,0 +1,61 @@
+{%extends "layout.html"%}
+{%block content%}
+<div class="home">
+  <!-- <h1>My homepage</h1>
+  <p>This is a test website</p> -->
+  <!-- <iframe src="//www.google.com/maps/embed/v1/place?q=Harrods,Brompton%20Rd,%20UK
+  &zoom=10
+  &key=AIzaSyBffodETNeaEdS1171Mg9HFDMF7AHUI4SE">
+</iframe> -->
+<p id="demo"></p>
+<!-- <div id="map"></div> -->
+
+<script>
+
+var xmlhttp = new XMLHttpRequest(); //Ajax
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var myObj = JSON.parse(this.responseText);
+    document.getElementById("demo").innerHTML = myObj.name;
+  }
+};
+xmlhttp.open("GET", "/events/52.22604/20.99154/5000", true);
+xmlhttp.send();
+
+var map;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 2,
+    center: {lat: 	52.237049, lng: 21.017532},
+    mapTypeId: 'terrain'
+  });
+
+  // Create a <script> tag and set the USGS URL as the source.
+  var script = document.createElement('script');
+
+  // This example uses a local copy of the GeoJSON stored at
+  // http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
+  script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
+  document.getElementsByTagName('head')[0].appendChild(script);
+
+}
+
+function eqfeed_callback(results) {
+  var heatmapData = [];
+  for (var i = 0; i < results.features.length; i++) {
+    var coords = results.features[i].geometry.coordinates;
+    var latLng = new google.maps.LatLng(coords[1], coords[0]);
+    heatmapData.push(latLng);
+  }
+  var heatmap = new google.maps.visualization.HeatmapLayer({
+    data: heatmapData,
+    dissipating: false,
+    map: map
+  });
+}
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBffodETNeaEdS1171Mg9HFDMF7AHUI4SE&callback&libraries=visualization&callback=initMap">
+</script>
+</div>
+{%endblock%}

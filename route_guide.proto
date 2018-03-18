@@ -1,0 +1,41 @@
+syntax = "proto3";
+package wawcode_shame;
+
+service EventsService {
+    rpc PutEvent(Event) returns (PutEventResponse);
+    rpc PutEvents(Events) returns (PutEventResponse);
+    rpc EventsInDistance(EventsInDistanceRequest) returns (Events);
+    rpc GetEvent(GetEventRequest) returns (Event);
+}
+
+message GetEventRequest {
+    string id = 1;
+}
+
+message PutEventResponse {
+
+}
+
+message Location {
+    double Lat = 1;
+    double Lon = 2;
+}
+
+message EventsInDistanceRequest {
+    Location location = 1;
+    int64 distance = 2;
+}
+
+message Event {
+    string id = 1;
+    string category = 2;
+    string district = 3;
+    string address = 4;
+    int64 created = 5;
+    Location location = 6;
+    string type = 7; // more detailed description
+}
+
+message Events {
+    repeated Event events = 1;
+}

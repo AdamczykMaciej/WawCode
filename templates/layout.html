@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>Map of Shame</title>
+      <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+      <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 800px;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1 class="logo">Map of Shame</h1>
+        <strong><nav>
+          <ul class="menu">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+          </ul>
+        </nav></strong>
+      </div>
+    </header>
+    <div class="container">
+        {%block content%}
+        {%endblock%}
+    </div>
+  </body>
+</html>
